@@ -16,21 +16,30 @@ In this exercise, we use histograms to understand the type of degradation, then 
 
 \begin{enumerate}
 \item[a)] In OpenCV, histograms can be calculated using the function \texttt{cv2.calcHist}. The signature is not very self-explanatory, though. Please look up
-the function signature on the internet. We use the call \texttt{cv2.calcHist(([image], [0], None, [256], [0,256]))}. Please describe each term.
-\item[b)] Describe quantitatively, what is the problem with \texttt{kodim15\_gray\_low\_contrast.png}. 
+the function signature on the internet. We use the call \texttt{cv2.calcHist(([image], [0], None, [256], [0,256]))}. Please describe each term.\\
+[image] : The image(s) from wich we want to receive the histogram. It has to be wrapped in a list.\\
+[0] : The channels we want the histogram of. As we use a greyscale immage, only [0](black) is possible. For rgb immages you can use 0,1 or 2 to get a histogram of 1 of the 3 channels.\\
+None : Here we could pass a mask, to limit the area from wich the histogram is made.\\
+[256] : Here we can pass our histograms bin count. We use 256, to get every greyscale as its own bin.\\
+[0,256] : The colorspectrum we want the to use. Here we use the whole 8bit range. Excluded ranges will be also excluded from the histogram.\\
+\item[b)] Describe quantitatively, what is the problem with \texttt{kodim15\_gray\_low\_contrast.png}. \\
+
+As the histogramm shows, the picture only exists of gray in the range from around 100 to 160. Other shades of gray are not appering. This low variance causes the contrast in the picture to be very bad.
 \item[c)] Extend the notebook to correct the image. \\
 \includegraphics[width=0.9\textwidth]{source\_code/kodim15\_gray\_low\_contrast\_corrected.png}
 
-\item[d)] Describe quantitatively, what is the problem with \texttt{kodim15\_gray\_ueberbelichtet.png}. 
+\item[d)] Describe quantitatively, what is the problem with \texttt{kodim15\_gray\_ueberbelichtet.png}. \\
+The image is too bright. We can also see this in the histogram, as there are no low values, representing dark shades.
 \item[e)] Extend the notebook to correct the image. \\
 \includegraphics[width=0.9\textwidth]{source\_code/kodim15\_gray\_ueberbelichtet\_corrected.png}
 
-\item[f)] Describe quantitatively, what is the problem with \texttt{kodim15\_gray\_unterbelichtet.png}. 
+\item[f)] Describe quantitatively, what is the problem with \texttt{kodim15\_gray\_unterbelichtet.png}. \\
+The image is too dark. We can also this in the histogram, as there are no values above 100, representing the brighter shades.
 \item[g)] Extend the notebook to correct the image. \\
 \includegraphics[width=0.9\textwidth]{source\_code/kodim15\_gray\_unterbelichtet\_corrected.png}
 \end{enumerate}
 
-I needed the following time to complete the task:
+I needed the following time to complete the task: 30min
 
 \subsection{Non-Linear Pixel Operations (10 Points)}
 
@@ -39,7 +48,8 @@ Implement a non-linear correction of the image. We use the function $$ \Phi(x) =
 \begin{enumerate}
 \item[a)] Prepare the function for use as a pixel operation. Adapte the color values to match the definition range of the function, then apply the function on the image \texttt{kodim15\_unterbelichtet.png}.
 \item[b)] The image is an rgb image, not grayscale. Describe in your own words, how the different channels need to be treated for brightness or contrast correction. What would happen,
-if different functions are applied to each channel?
+if different functions are applied to each channel?\\
+All channels need to be treated the same way. If you apply different functions to the channels, the colors in the immage will shift in weird ways, depending on how much the functions differ.
 \end{enumerate}
 
 \includegraphics[width=0.9\textwidth]{source\_code/kodim15\_exp\_corrected\_1.png}
@@ -47,16 +57,21 @@ if different functions are applied to each channel?
 \subsection{Non-Linear Pixel Operations with parametrized Function (10 Points)}
 
 Finally, we want to use the exponential function $$ \Phi(x) = \frac{G-1}{e^{a \cdot (G-1)} - 1} \cdot (e^{ax} - 1)$$. Hereby, $G$ is the upper bound of our value range, i.e. $G-1$ is 255. The
-parameter $a$ can be selected for the intended correction.
+parameter $a$ can be selected for the intended correction.\\
+\\
+I needed the following time to complete the task: 30min
 
 \begin{enumerate}
-\item[a)] Prepare the function for use as a pixel operation. Adapte the color values to match the definition range of the function, then apply the function on the image \texttt{kodim15\_unterbelichtet.png}.
-\item[b)] Determine a good value for $a$. Describe your procedure for determining a good value in your own worlds.
+\item[a)] Prepare the function for use as a pixel operation. Adapte the color values to match the definition range of the function, then apply the function on the image\\
+The color values are already matching the definition range.
+\texttt{kodim15\_unterbelichtet.png}.
+\item[b)] Determine a good value for $a$. Describe your procedure for determining a good value in your own worlds.\\
+I used -0.01. The color values in the picture are heavily on the dark side, so one needs a negative value to brighten the picture up. Just by trying out, -0.1 is too bright and -0.001 not noticable enough. For my eyes everything from -0.008 to -0.01 was in an acceptable range. Even -0.02 already was too bright again.
 \end{enumerate}
 
 \includegraphics[width=0.9\textwidth]{source\_code/kodim15\_exp\_corrected\_2.png}
 
-I needed the following time to complete the task:
+I needed the following time to complete the task: 15min
 
 \subsection{Histogram Egalization (30 Points)}
 
@@ -68,6 +83,6 @@ We now want to implement histogram egalisation.
 
 \includegraphics[width=0.9\textwidth]{source\_code/kodim15\_histogram\_corrected.png}
 
-I needed the following time to complete the task:
+I needed the following time to complete the task: 60min
 
 \end{document}
