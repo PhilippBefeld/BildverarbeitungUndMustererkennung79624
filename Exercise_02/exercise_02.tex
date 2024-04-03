@@ -19,7 +19,7 @@ In this exercise, we use histograms to understand the type of degradation, then 
 the function signature on the internet. We use the call \texttt{cv2.calcHist(([image], [0], None, [256], [0,256]))}. Please describe each term.\\
 
 [image] : The image(s) from wich we want to receive the histogram. It has to be wrapped in a list.\\
-[0] : The channels we want the histogram of. As we use a greyscale immage, only [0](black) is possible. For rgb immages you can use [0,1,2] to get a histogram of all 3 channels.\\
+[0] : The channels we want the histogram of. As we use a greyscale immage, only [0](black) is possible. For rgb immages you can use 0,1 or 2 to get a histogram of 1 of the 3 channels.\\
 None : Here we could pass a mask, to limit the area from wich the histogram is made.\\
 [256] : Here we can pass our histograms bin count. We use 256, to get every greyscale as its own bin.\\
 [0,256] : The colorspectrum we want the to use. Here we use the whole 8bit range. Excluded ranges will be also excluded from the histogram.\\
